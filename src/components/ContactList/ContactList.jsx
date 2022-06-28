@@ -5,6 +5,7 @@ import styles from './ContactList.module.css';
 const ContactList = ({ contacts, deleteClickHandler }) => {
   const contactsList = contacts.map(({ id, name, number }) => (
     <ContactEl
+      id={id}
       key={id}
       deleteClickHandler={deleteClickHandler}
       name={name}

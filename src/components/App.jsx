@@ -35,12 +35,12 @@ export class App extends Component {
   };
 
   deleteClickHandler = id => {
-    const { contacts } = this.state;
-    const requiredContactIdx = contacts.findIndex(contact => contact.id === id);
-    contacts.splice(requiredContactIdx, 1);
-    return this.setState({ contacts });
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(contact => contact.id !== id),
+    }));
   };
   render() {
+    const { addContact, filterChangeHandler, deleteClickHandler } = this;
     const { contacts, filter } = this.state;
     const preparedFilter = filter.toLowerCase();
     const filteredContacts = contacts.filter(contact =>
@@ -49,12 +49,12 @@ export class App extends Component {
     return (
       <div className="container">
         <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.addContact} />
+        <ContactForm onSubmit={addContact} />
         <h2>Contacts</h2>
-        <Filter onChange={this.filterChangeHandler} />
+        <Filter onChange={filterChangeHandler} />
         <ContactList
           contacts={filteredContacts}
-          deleteClickHandler={this.deleteClickHandler}
+          deleteClickHandler={deleteClickHandler}
         />
       </div>
     );

@@ -16,12 +16,12 @@ class ContactForm extends Component {
     number: '',
   };
 
-  inputChangeHandler = event => {
-    const value = event.target.name;
-    return this.setState({ [value]: event.target.value });
+  inputChangeHandler = ({ target }) => {
+    const { name, value } = target;
+    return this.setState({ [name]: value });
   };
 
-  handleSubmit = event => {
+  submitHandler = event => {
     event.preventDefault();
     const { name, number } = this.state;
     this.props.onSubmit(name, number);
@@ -29,14 +29,16 @@ class ContactForm extends Component {
   };
 
   reset = () => this.setState({ name: '', number: '' });
+
   render() {
+    const { inputChangeHandler, submitHandler } = this;
     const { name, number } = this.state;
     return (
-      <form className={styles.form} onSubmit={this.handleSubmit}>
+      <form className={styles.form} onSubmit={submitHandler}>
         <label className={styles.label}>
           <input
             className={styles.input}
-            onChange={this.inputChangeHandler}
+            onChange={inputChangeHandler}
             type="text"
             name="name"
             value={name}
@@ -49,7 +51,7 @@ class ContactForm extends Component {
         <label className={styles.label}>
           <input
             className={styles.input}
-            onChange={this.inputChangeHandler}
+            onChange={inputChangeHandler}
             type="tel"
             name="number"
             value={number}
