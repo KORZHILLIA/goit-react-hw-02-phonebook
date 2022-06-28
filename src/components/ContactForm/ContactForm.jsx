@@ -23,12 +23,14 @@ class ContactForm extends Component {
 
   submitHandler = event => {
     event.preventDefault();
-    const { name, number } = this.state;
-    this.props.onSubmit(name, number);
+    // const { name, number } = this.state;
+    this.props.onSubmit({ ...this.state });
     this.reset();
   };
 
-  reset = () => this.setState({ name: '', number: '' });
+  reset() {
+    this.setState({ name: '', number: '' });
+  }
 
   render() {
     const { inputChangeHandler, submitHandler } = this;

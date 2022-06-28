@@ -10,13 +10,13 @@ export class App extends Component {
     filter: '',
   };
 
-  addContact = (name, number) => {
+  addContact = ({ name, number }) => {
     const newContact = {
       id: nanoid(),
       name,
       number,
     };
-    return this.setState(prevState => {
+    this.setState(prevState => {
       const requiredIdx = prevState.contacts.findIndex(
         contact => contact.name === newContact.name
       );
@@ -31,7 +31,7 @@ export class App extends Component {
   };
 
   filterChangeHandler = value => {
-    return this.setState({ filter: value });
+    this.setState({ filter: value });
   };
 
   deleteClickHandler = id => {
@@ -43,9 +43,11 @@ export class App extends Component {
     const { addContact, filterChangeHandler, deleteClickHandler } = this;
     const { contacts, filter } = this.state;
     const preparedFilter = filter.toLowerCase();
-    const filteredContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(preparedFilter)
-    );
+    const filteredContacts = !filter
+      ? contacts
+      : contacts.filter(contact =>
+          contact.name.toLowerCase().includes(preparedFilter)
+        );
     return (
       <div className="container">
         <h1>Phonebook</h1>
